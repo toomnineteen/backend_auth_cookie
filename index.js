@@ -13,16 +13,24 @@ app.use(express.json());
 app.use(
   cors({
     credentials: true,
-    origin: ["http://localhost:3000","http://localhost:5173"],
-  }),
+    origin: [
+      "http://localhost:3000",
+      "http://localhost:5173",
+      "https://front-end-auth-use-cookie.vercel.app",
+    ],
+  })
 );
 
 app.use(cookieParser());
 
-db()
+db();
 
-app.get("/", (req, res) => {res.send("WELCOME HOME PAGE");});
+app.get("/", (req, res) => {
+  res.send("WELCOME HOME PAGE");
+});
 
 readdirSync("./routes").map((p) => app.use("/", require("./routes/" + p)));
 
-app.listen(port, () => {console.log(`Server is running on port ${port}`);});
+app.listen(port, () => {
+  console.log(`Server is running on port ${port}`);
+});
