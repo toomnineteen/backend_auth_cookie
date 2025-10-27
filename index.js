@@ -10,14 +10,22 @@ const port = process.env.PORT || 3000;
 
 app.use(express.json());
 
+const allowedOrigins = [
+  "https://front-end-auth-use-cookie.vercel.app",
+  "http://localhost:3000",
+  "http://localhost:5173",
+];
+
 app.use(
   cors({
     credentials: true,
-    origin: [
-      "http://localhost:3000",
-      "http://localhost:5173",
-      "https://front-end-auth-use-cookie.vercel.app",
-    ],
+    origin: (origin, callback) => {
+      if (!origin || allowedOrigins.includes(origin)) {
+        callback(null, true);
+      } else {
+        callback(new Error("Not allowed by CORS"));
+      }
+    },
   })
 );
 

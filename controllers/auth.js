@@ -58,12 +58,16 @@ exports.login = async (req, res) => {
       expiresIn: "1h",
     });
 
+    const isProduction =
+      process.env.NODE_ENV === "production" ||
+      process.env.VERCEL_ENV === "production";
+
     res
       .cookie("token", token, {
         httpOnly: true,
         maxAge: 3600000,
-        secure: true,
-        sameSite: "none",
+        secure: isProduction,
+        sameSite: isProduction ? "none" : "lax",
       })
       .json({ message: "Logged in successfully" });
   } catch (err) {
