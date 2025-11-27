@@ -14,6 +14,8 @@ const corsOptions = {
   ],
   credentials: true, // ✅ สำคัญมาก!
   optionsSuccessStatus: 200,
+  methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"], // ✅ เพิ่ม methods
+  allowedHeaders: ["Content-Type", "Authorization"], // ✅ เพิ่ม headers
 };
 
 app.use(cors(corsOptions));
