@@ -53,23 +53,13 @@ exports.login = async (req, res) => {
     if (!isMatch) {
       return res.status(400).json({ message: "Invalid credentials" });
     }
-
+    
     const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET, {
-      expiresIn: "1h",
+      expiresIn: "1d",
     });
-
-    const isProduction =
-      process.env.NODE_ENV === "production" ||
-      process.env.VERCEL_ENV === "production";
-
     res
-      .cookie("token", token, {
-        httpOnly: true,
-        maxAge: 3600000,
-        secure: isProduction,
-        sameSite: isProduction ? "none" : "lax",
-      })
-      .json({ message: "Logged in successfully" });
+      .cookie("token", token, { httpOnly: true })
+      .json({ message: "Logged in" });
   } catch (err) {
     res.status(500).json({ error: err.message });
     console.log(err);

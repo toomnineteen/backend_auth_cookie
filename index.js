@@ -18,14 +18,8 @@ const allowedOrigins = [
 
 app.use(
   cors({
+    origin: "http://localhost:5173", // React app
     credentials: true,
-    origin: (origin, callback) => {
-      if (!origin || allowedOrigins.includes(origin)) {
-        callback(null, true);
-      } else {
-        callback(new Error("Not allowed by CORS"));
-      }
-    },
   })
 );
 
