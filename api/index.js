@@ -3,7 +3,7 @@ const express = require("express");
 const cookieParser = require("cookie-parser");
 const { readdirSync } = require("fs");
 const cors = require("cors");
-const db = require("./config/db");
+const connectdb = require("../config/connectdb");
 
 const app = express();
 const port = process.env.PORT || 3000;
