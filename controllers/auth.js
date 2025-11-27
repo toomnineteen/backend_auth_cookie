@@ -63,6 +63,7 @@ exports.login = async (req, res) => {
       secure: true,
       sameSite: "None",
       path: "/",
+      maxAge: 24 * 60 * 60 * 1000, // Safari ต้องมี!
     });
 
     res.json({ message: "Logged in" });

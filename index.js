@@ -12,15 +12,10 @@ app.use(
   cors({
     origin: "https://front-end-auth-use-cookie.vercel.app",
     credentials: true,
+    methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+    allowedHeaders: ["Content-Type", "Authorization"],
   })
 );
-
-app.use((req, res, next) => {
-  res.header("Access-Control-Allow-Credentials", "true");
-  res.header("Access-Control-Allow-Headers", "Content-Type, Authorization");
-  res.header("Access-Control-Allow-Methods", "GET,POST,PUT,DELETE");
-  next();
-});
 
 app.use(cookieParser());
 app.use(express.json());
