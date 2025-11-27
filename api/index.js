@@ -8,7 +8,7 @@ const app = express();
 
 // Backend: api/index.js
 const corsOptions = {
-  origin: ['http://localhost:5173', 'https://your-frontend.vercel.app'],
+  origin: ['http://localhost:5173', 'https://front-end-auth-use-cookie.vercel.app'],
   credentials: true
 };
 
