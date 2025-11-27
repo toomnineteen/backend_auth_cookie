@@ -4,6 +4,7 @@ const cookieParser = require("cookie-parser");
 const { readdirSync } = require("fs");
 const cors = require("cors");
 const connectdb = require("../config/connectdb");
+const path = require("path");
 
 const app = express();
 const port = process.env.PORT || 3000;
@@ -28,7 +29,7 @@ app.get("/", (req, res) => {
   res.send("WELCOME HOME PAGE");
 });
 
-readdirSync("./routes").map((p) => app.use("/", require("./routes/" + p)));
+readdirSync(path.join(__dirname, "../routes")).map((file) => {app.use("/", require(`../routes/${file}`));});
 
 app.listen(port, () => {
   console.log(`Server is running on port ${port}`);
