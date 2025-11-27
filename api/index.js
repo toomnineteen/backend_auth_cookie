@@ -12,16 +12,6 @@ const corsOptions = {
   credentials: true
 };
 
-// CORS Configuration
-// const corsOptions = {
-//   origin:
-//     process.env.NODE_ENV === "production"
-//       ? ["https://your-frontend-domain.vercel.app"]
-//       : ["http://localhost:3000", "http://localhost:5173"],
-//   credentials: true,
-//   optionsSuccessStatus: 200,
-// };
-
 app.use(cors(corsOptions));
 
 // Body parser middleware
