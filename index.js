@@ -10,18 +10,16 @@ const port = process.env.PORT || 3000;
 
 app.use(express.json());
 
-const allowedOrigins = [
-  "https://front-end-auth-use-cookie.vercel.app",
-  "http://localhost:3000",
-  "http://localhost:5173",
-];
+app.use(cors({
+  origin: "https://front-end-auth-use-cookie.vercel.app", 
+  credentials: true
+}));
 
-app.use(
-  cors({
-    origin: [("http://localhost:5173","https://front-end-auth-use-cookie.vercel.app")],
-    credentials: true,
-  })
-);
+app.use((req, res, next) => {
+  res.header("Access-Control-Allow-Credentials", "true");
+  res.header("Access-Control-Allow-Headers", "Content-Type, Authorization");
+  next();
+});
 
 app.use(cookieParser());
 
