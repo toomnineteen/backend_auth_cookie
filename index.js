@@ -8,12 +8,23 @@ const db = require("./config/db");
 const app = express();
 const port = process.env.PORT || 3000;
 
+const FRONTEND = "https://front-end-auth-use-cookie.vercel.app";
+
 app.use(
   cors({
-    origin: "https://front-end-auth-use-cookie.vercel.app",
+    origin: FRONTEND,
     credentials: true,
     methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
     allowedHeaders: ["Content-Type", "Authorization"],
+    optionsSuccessStatus: 200,
+  })
+);
+
+app.options(
+  "*",
+  cors({
+    origin: FRONTEND,
+    credentials: true,
   })
 );
 

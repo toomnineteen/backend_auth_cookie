@@ -60,13 +60,13 @@ exports.login = async (req, res) => {
 
     res.cookie("token", token, {
       httpOnly: true,
-      secure: true,
-      sameSite: "None",
+      secure: true, // ต้องใช้ HTTPS บน Vercel
+      sameSite: "None", // สำคัญสำหรับ cross-site
       path: "/",
-      maxAge: 24 * 60 * 60 * 1000, // Safari ต้องมี!
+      maxAge: 24 * 60 * 60 * 1000, // 1 วัน (ใส่ซะ)
     });
 
-    res.json({ message: "Logged in" });
+    res.status(200).json({ message: "Logged in" });
   } catch (err) {
     res.status(500).json({ error: err.message });
     console.log(err);
@@ -79,6 +79,7 @@ exports.logout = async (req, res) => {
       httpOnly: true,
       secure: true,
       sameSite: "None",
+      path: "/",
     });
     return res.status(200).json({ message: "ออกจากระบบเรียบร้อย" });
   } catch (err) {
@@ -101,7 +102,7 @@ exports.currentUser = async (req, res) => {
   try {
     const id = req.user.id;
     const user = await Users.findById(id).select("-password");
-    res.json({ user });
+    res.status(200).json({ user });
   } catch (err) {
     res.status(500).json({ error: err.message });
     console.log(err);
