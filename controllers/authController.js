@@ -8,52 +8,6 @@ const signToken = (id) => {
   });
 };
 
-// ส่ง Token ผ่าน Cookie
-const sendTokenResponse = (user, statusCode, res) => {
-  const token = signToken(user._id);
-
-  const cookieOptions = {
-    expires: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000), // 7 days
-    httpOnly: true,
-    // secure: process.env.NODE_ENV === "production",
-    // sameSite: process.env.NODE_ENV === "production" ? "none" : "lax",
-    secure: true, // ✅ เปลี่ยนเป็น true ตลอด
-    sameSite: "none", // ✅ เปลี่ยนเป็น 'none' ตลอด
-    path: "/",
-  };
-
-  // ✅ เพิ่ม: ถ้าเป็น production บน Vercel
-  if (process.env.NODE_ENV === "production") {
-    cookieOptions.domain = ".vercel.app"; // ถ้า subdomain เดียวกัน
-  }
-
-  res
-    .status(statusCode)
-    .cookie("token", token, cookieOptions)
-    .json({
-      success: true,
-      token,
-      user: {
-        id: user._id,
-        email: user.email,
-        name: user.name,
-        role: user.role,
-      },
-    });
-};
-
-// หน้าแรก
-exports.homeApi = async (req, res) => {
-  try {
-    res.status(200).send("This My Home.");
-  } catch (error) {
-    res.status(500).json({
-      success: false,
-      message: "เกิดข้อผิดพลาดในการดึงข้อมูล",
-    });
-  }
-};
-
 // @desc    สมัครสมาชิก
 // @route   POST /api/auth/register
 // @access  Public
@@ -131,7 +85,18 @@ exports.login = async (req, res) => {
       });
     }
 
-    sendTokenResponse(user, 200, res);
+    const token = signToken(user._id);
+
+    return res.status(200).json({
+      success: true,
+      token,
+      user: {
+        id: user._id,
+        email: user.email,
+        name: user.name,
+        role: user.role,
+      },
+    });
   } catch (error) {
     console.error("Login error:", error);
     res.status(500).json({
@@ -139,25 +104,6 @@ exports.login = async (req, res) => {
       message: "เกิดข้อผิดพลาดในการเข้าสู่ระบบ",
       error: error.message,
     });
-  }
-};
-
-// @desc    ออกจากระบบ
-// @route   POST /api/auth/logout
-// @access  Private
-exports.logout = async (req, res) => {
-  try {
-    res.cookie("token", "none", {
-      expires: new Date(Date.now() + 1 * 1000),
-      httpOnly: true,
-    });
-
-    res.status(200).json({
-      success: true,
-      message: "ออกจากระบบสำเร็จ",
-    });
-  } catch (error) {
-    console.log(error);
   }
 };
 

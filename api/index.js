@@ -12,8 +12,6 @@ const corsOptions = {
     "http://localhost:5173",
     "https://front-end-auth-use-cookie.vercel.app",
   ],
-  credentials: true, // ✅ สำคัญมาก!
-  optionsSuccessStatus: 200,
   methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"], // ✅ เพิ่ม methods
   allowedHeaders: ["Content-Type", "Authorization"], // ✅ เพิ่ม headers
 };
@@ -51,11 +49,9 @@ app.get("/", (req, res) => {
     success: true,
     message: "Auth API is running",
     endpoints: {
-      home: "GET /api/auth/home",
       register: "POST /api/auth/register",
       login: "POST /api/auth/login",
-      logout: "POST /api/auth/logout",
-      me: "GET /api/auth/me",
+      me: "POST /api/auth/me",
       health: "GET /api/health",
     },
   });
