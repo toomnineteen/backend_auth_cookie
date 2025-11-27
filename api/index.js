@@ -8,8 +8,12 @@ const app = express();
 
 // Backend: api/index.js
 const corsOptions = {
-  origin: ['http://localhost:5173', 'https://front-end-auth-use-cookie.vercel.app'],
-  credentials: true
+  origin: [
+    "http://localhost:5173",
+    "https://front-end-auth-use-cookie.vercel.app",
+  ],
+  credentials: true, // ✅ สำคัญมาก!
+  optionsSuccessStatus: 200,
 };
 
 app.use(cors(corsOptions));

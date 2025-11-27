@@ -6,6 +6,10 @@ exports.protect = async (req, res, next) => {
   try {
     let token;
 
+    // ✅ เพิ่ม log
+    console.log("Cookies:", req.cookies);
+    console.log("Headers:", req.headers);
+
     // ดึง token จาก cookie
     if (req.cookies && req.cookies.token) {
       token = req.cookies.token;

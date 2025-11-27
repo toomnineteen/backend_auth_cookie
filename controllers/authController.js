@@ -20,6 +20,11 @@ const sendTokenResponse = (user, statusCode, res) => {
     path: "/",
   };
 
+  // ✅ เพิ่ม: ถ้าเป็น production บน Vercel
+  if (process.env.NODE_ENV === "production") {
+    cookieOptions.domain = ".vercel.app"; // ถ้า subdomain เดียวกัน
+  }
+
   res
     .status(statusCode)
     .cookie("token", token, cookieOptions)
