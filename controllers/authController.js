@@ -146,15 +146,19 @@ exports.login = async (req, res) => {
 // @route   POST /api/auth/logout
 // @access  Private
 exports.logout = async (req, res) => {
-  res.cookie("token", "none", {
-    expires: new Date(Date.now() + 1 * 1000),
-    httpOnly: true,
-  });
+  try {
+    res.cookie("token", "none", {
+      expires: new Date(Date.now() + 1 * 1000),
+      httpOnly: true,
+    });
 
-  res.status(200).json({
-    success: true,
-    message: "ออกจากระบบสำเร็จ",
-  });
+    res.status(200).json({
+      success: true,
+      message: "ออกจากระบบสำเร็จ",
+    });
+  } catch (error) {
+    console.log(error);
+  }
 };
 
 // @desc    ดูข้อมูลผู้ใช้ที่ login อยู่
