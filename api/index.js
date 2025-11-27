@@ -22,7 +22,7 @@ app.options("*", cors());
 app.use(cookieParser());
 app.use(express.json());
 
-db();
+connectdb();
 
 app.get("/", (req, res) => {
   res.send("WELCOME HOME PAGE");
@@ -33,3 +33,5 @@ readdirSync("./routes").map((p) => app.use("/", require("./routes/" + p)));
 app.listen(port, () => {
   console.log(`Server is running on port ${port}`);
 });
+
+module.exports = app;
